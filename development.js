@@ -1,11 +1,11 @@
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-const src  = path.resolve(__dirname, 'src')
-const dist = path.resolve(__dirname, 'dist')
+const src  = path.join(__dirname, 'src')
+const dist = path.join(__dirname, 'dist')
 
 export default {
-  entry: src + '/index.jsx',
+  entry: path.join( src, '/index.jsx'),
 
   output: {
     path: dist,
@@ -28,7 +28,7 @@ export default {
 
   plugins: [
      new HtmlWebpackPlugin({
-      template: src + '/index.html',
+      template: path.join( src, '/index.html'),
       filename: 'index.html'
     })
   ]
