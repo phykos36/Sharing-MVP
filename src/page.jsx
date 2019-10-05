@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import Url_Area from "./component/molecules/url-area";
+import { UrlArea } from "./component/molecules/url-area";
 
-class Page extends Component {
+export class Page extends Component {
   render() {
     return (
       <div className="page">
-        <Url_Area />
+        <UrlArea />
       </div>
     );
   }
 }
-
-export default Page;

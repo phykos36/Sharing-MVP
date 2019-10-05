@@ -1,6 +1,6 @@
 import React from "react";
 
-class Delete_btn extends React.Component {
+export class DeleteButton extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -10,7 +10,7 @@ class Delete_btn extends React.Component {
   render() {
     return (
       <div className="delete_btn">
-        <input type="submit" value="削除" onChange={this.handleDelete} />
+        <input onChange={this.handleDelete}  type="submit" value="削除"/>
       </div>
     );
   }
@@ -18,5 +18,3 @@ class Delete_btn extends React.Component {
     this.setState({ flag: !flag });
   };
 }
-
-export default Delete_btn;

@@ -1,31 +1,37 @@
 import React from "react";
 
-class Url_Area extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      lists: [],
-      url: "",
- //   flag: false  削除の時使う
-    };
+export class UrlArea extends React.Component {
+  constructor(props) {
+    super(props);
+    (this.handleChange = this.handleChange.bind(this)),
+      (this.state = {
+        lists: [],
+        url: ""
+      });
   }
   render() {
     return (
-      <div className="url_area">
+      <div className="url-area__container">
         <p>Sharing-MVP</p>
         <input
-          type="text"
+          className=""
           name="url"
-          className="url_area-input"
           onChange={this.handleChange}
+          type="text"
           value={this.state.url}
         />
-        <button className="add_btn" onClick={this.handleSubmit}>追加</button>
+        <button className="add_btn" onClick={this.handleSubmit}>
+          追加
+        </button>
 
         {this.state.lists.map(l => (
           <div>
             {l.url}{" "}
-            <button type="submit" className="delete_btn" onClick={this.handleDelete}>
+            <button
+              className="delete_btn"
+              onClick={this.handleDelete}
+              type="submit"
+            >
               <i className="far fa-trash-alt"></i>
             </button>
           </div>
@@ -37,17 +43,7 @@ class Url_Area extends React.Component {
   handleChange = e => {
     this.setState({ url: event.target.value });
   };
-//  TODO: 削除機能
-/*  
-    handleDelete = (event) => {
-    event.preventDefault();
-    this.setState({
-      flag : !flag
-    })
-  }
-*/
 
-// TODO: 10個こえたらはみ出たものの削除
   handleSubmit = e => {
     e.preventDefault();
     this.setState({
@@ -56,5 +52,3 @@ class Url_Area extends React.Component {
     });
   };
 }
-
-export default Url_Area;
