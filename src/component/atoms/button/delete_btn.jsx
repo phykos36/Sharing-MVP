@@ -1,3 +1,4 @@
+//未実装
 import React from "react";
 
 export class DeleteButton extends React.Component {
@@ -9,8 +10,8 @@ export class DeleteButton extends React.Component {
   }
   render() {
     return (
-      <div className="delete_btn">
-        <input onChange={this.handleDelete}  type="submit" value="削除"/>
+      <div className="delete-btn">
+        <input onChange={this.handleDelete} type="submit" value="削除" />
       </div>
     );
   }

@@ -5,7 +5,7 @@ export class UrlArea extends React.Component {
     super(props);
     (this.handleChange = this.handleChange.bind(this)),
       (this.state = {
-        lists: [],
+        url_lists: [],
         url: ""
       });
   }
@@ -14,21 +14,21 @@ export class UrlArea extends React.Component {
       <div className="url-area__container">
         <p>Sharing-MVP</p>
         <input
-          className=""
+          className="url-area__input"
           name="url"
           onChange={this.handleChange}
           type="text"
           value={this.state.url}
         />
-        <button className="add_btn" onClick={this.handleSubmit}>
+        <button className="add-btn" onClick={this.handleSubmit}>
           追加
         </button>
 
-        {this.state.lists.map(l => (
+        {this.state.url_lists.map(lists_item => (
           <div>
-            {l.url}{" "}
+            {lists_item.url}{" "}
             <button
-              className="delete_btn"
+              className="delete-btn"
               onClick={this.handleDelete}
               type="submit"
             >
@@ -44,10 +44,11 @@ export class UrlArea extends React.Component {
     this.setState({ url: event.target.value });
   };
 
+  // TODO: 10個こえたらはみ出たものの削除 #6
   handleSubmit = e => {
     e.preventDefault();
     this.setState({
-      lists: [...this.state.lists, { url: this.state.url }],
+      url_lists: [...this.state.url_lists, { url: this.state.url }],
       url: ""
     });
   };
