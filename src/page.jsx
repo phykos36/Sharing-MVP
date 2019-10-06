@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { UrlArea } from "./component/molecules/url-area";
+import { UrlArea } from "./component/molecules/UrlArea";
 
 export class Page extends Component {
   render() {

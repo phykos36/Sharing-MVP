@@ -3,11 +3,11 @@ import React from "react";
 export class UrlArea extends React.Component {
   constructor(props) {
     super(props);
-    (this.handleChange = this.handleChange.bind(this)),
-      (this.state = {
-        url_lists: [],
-        url: ""
-      });
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      urls: [],
+      href: ""
+    };
   }
   render() {
     return (
@@ -18,15 +18,15 @@ export class UrlArea extends React.Component {
           name="url"
           onChange={this.handleChange}
           type="text"
-          value={this.state.url}
+          value={this.state.href}
         />
         <button className="add-btn" onClick={this.handleSubmit}>
           追加
         </button>
 
-        {this.state.url_lists.map(lists_item => (
+        {this.state.urls.map(url => (
           <div>
-            {lists_item.url}{" "}
+            {url.href}
             <button
               className="delete-btn"
               onClick={this.handleDelete}
@@ -41,15 +41,15 @@ export class UrlArea extends React.Component {
   }
 
   handleChange = e => {
-    this.setState({ url: event.target.value });
+    this.setState({ href: e.target.value });
   };
 
   // TODO: 10個こえたらはみ出たものの削除 #6
   handleSubmit = e => {
     e.preventDefault();
     this.setState({
-      url_lists: [...this.state.url_lists, { url: this.state.url }],
-      url: ""
+      urls: [...this.state.urls, { href: this.state.href }],
+      href: ""
     });
   };
 }
