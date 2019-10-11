@@ -27,13 +27,6 @@ export class UrlArea extends React.Component {
         {this.state.urls.map(url => (
           <div>
             {url.href}
-            <button
-              className="delete-btn"
-              onClick={this.handleDelete}
-              type="submit"
-            >
-              <i className="far fa-trash-alt"></i>
-            </button>
           </div>
         ))}
       </div>
