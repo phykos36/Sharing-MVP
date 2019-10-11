@@ -20,7 +20,7 @@ export default {
         loader: "babel-loader"
       },
       {
-        test: /\.tsx$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         loader: "ts-loader"
 	  }
