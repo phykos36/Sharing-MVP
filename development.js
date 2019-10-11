@@ -5,7 +5,7 @@ const src = path.resolve(__dirname, "src");
 const dist = path.resolve(__dirname, "dist");
 
 export default {
-  entry: path.join(src, "index.jsx"),
+  entry: path.join(src, "index.tsx"),
 
   output: {
     path: dist,
@@ -28,7 +28,7 @@ export default {
   },
 
   resolve: {
-    extensions: [".js", ".jsx", "ts", "tsx"]
+    extensions: [".js", ".jsx", ".ts", ".tsx"]
   },
 
   plugins: [
