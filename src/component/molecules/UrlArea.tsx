@@ -35,11 +35,17 @@ class UrlAreaComponent extends React.Component<{ store }> {
   handleSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     event.preventDefault();
     const store = this.props.store;
-    const href = store.get("href");
-    const urls = store.get("urls");
+    const href = store.get("href") as string;
+    const urls = store.get("urls") as URLData[];
 
     store.set("href")("");
     store.set("urls")([...urls, { href, createdAt: new Date() }]);
+  }
+
+  handleURLClicked(urlId: number) {
+    const store = this.props.store;
+    const urls = store.get("urls") as URLData[];
+    store.set("urls")(urls.filter(x => x.id !== urlId));
   }
 
   render() {
@@ -60,7 +66,14 @@ class UrlAreaComponent extends React.Component<{ store }> {
         </button>
 
         {urls.map((url: URLData) => (
-          <div key={url.id}>{url.href}</div>
+          <a
+            key={url.id}
+            href={url.href}
+            onClick={() => this.handleURLClicked(url.id)}
+            target="_blank"
+          >
+            {url.href}
+          </a>
         ))}
       </div>
     );
