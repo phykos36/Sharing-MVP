@@ -15,7 +15,13 @@ class UrlAreaComponent extends React.Component<{ store }> {
     dbManipulator(objStore => {
       const getReq = objStore.getAll();
       getReq.onsuccess = event => {
-        store.set("urls")(getReq.result);
+        let urls: URLData[] = getReq.result;
+        const deltaTimeByDelete = 10 * 24 * 60 * 60 * 1000;
+        urls = urls.filter(
+          (url: URLData) =>
+            url.createdAt.getTime() + deltaTimeByDelete > new Date().getTime()
+        );
+        store.set("urls")(urls);
       };
     });
   }
@@ -33,7 +39,7 @@ class UrlAreaComponent extends React.Component<{ store }> {
     const urls = store.get("urls");
 
     store.set("href")("");
-    store.set("urls")([...urls, { href }]);
+    store.set("urls")([...urls, { href, createdAt: new Date() }]);
   }
 
   render() {
