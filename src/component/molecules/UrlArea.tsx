@@ -1,12 +1,23 @@
 import React from "react";
 import { URLData } from "../../URLData/URLData";
-import { Store } from "../../Store";
+import { Store, StoreInterface } from "../../Store";
+import { dbManipulator } from "../../Storage";
 
 class UrlAreaComponent extends React.Component<{ store }> {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const store = this.props.store;
+    dbManipulator(objStore => {
+      const getReq = objStore.getAll();
+      getReq.onsuccess = event => {
+        store.set("urls")(getReq.result);
+      };
+    });
   }
 
   handleChange(event: React.FormEvent<HTMLInputElement>) {
@@ -43,7 +54,7 @@ class UrlAreaComponent extends React.Component<{ store }> {
         </button>
 
         {urls.map((url: URLData) => (
-          <div>{url.href}</div>
+          <div key={url.id}>{url.href}</div>
         ))}
       </div>
     );

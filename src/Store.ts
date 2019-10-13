@@ -1,12 +1,16 @@
 import { createConnectedStore } from "undux";
 import { URLData } from "./URLData/URLData";
+import { withIndexDB } from "./withLocalStorage";
 
-interface Store {
+export interface StoreInterface {
   href: string;
   urls: URLData[];
 }
 
-export const Store = createConnectedStore<Store>({
-  href: "",
-  urls: []
-});
+export const Store = createConnectedStore<StoreInterface>(
+  {
+    href: "",
+    urls: []
+  },
+  withIndexDB
+);
