@@ -1,6 +1,6 @@
 import { createConnectedStore } from "undux";
 import { URLData } from "./URLData/URLData";
-import { withIndexDB } from "./withLocalStorage";
+import { withIndexDB } from "./withIndexDB";
 
 export interface StoreInterface {
   href: string;

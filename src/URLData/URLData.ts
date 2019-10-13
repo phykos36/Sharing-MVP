@@ -1,5 +1,5 @@
 export interface URLData {
-  id: number;
+  id?: number;
   href: string;
   createdAt: Date;
 }
