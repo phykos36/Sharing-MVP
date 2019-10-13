@@ -79,19 +79,21 @@ class UrlAreaComponent extends React.Component<{ store }> {
         <button className="add-btn" onClick={this.handleSubmit}>
           追加
         </button>
-
-        {urls
-          .filter(url => url.invisibleCause === NOT_EXPIRED)
-          .map((url: URLData) => (
-            <a
-              key={url.id}
-              href={url.href}
-              onClick={() => this.handleURLClicked(url.id)}
-              target="_blank"
-            >
-              {url.href}
-            </a>
-          ))}
+        <ul>
+          {urls
+            .filter(url => url.invisibleCause === NOT_EXPIRED)
+            .map((url: URLData) => (
+              <li key={url.id}>
+                <a
+                  href={url.href}
+                  onClick={() => this.handleURLClicked(url.id)}
+                  target="_blank"
+                >
+                  {url.href}
+                </a>
+              </li>
+            ))}
+        </ul>
       </div>
     );
   }
