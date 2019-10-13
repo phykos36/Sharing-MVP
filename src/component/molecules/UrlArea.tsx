@@ -1,5 +1,10 @@
 import React from "react";
-import { URLData } from "../../URLData/URLData";
+import {
+  URLData,
+  CLICKED_URL,
+  EXCEED_DAY,
+  NOT_EXPIRED
+} from "../../URLData/URLData";
 import { Store, StoreInterface } from "../../Store";
 import { dbManipulator } from "../../Storage";
 
@@ -17,10 +22,15 @@ class UrlAreaComponent extends React.Component<{ store }> {
       getReq.onsuccess = event => {
         let urls: URLData[] = getReq.result;
         const deltaTimeByDelete = 10 * 24 * 60 * 60 * 1000;
-        urls = urls.filter(
-          (url: URLData) =>
-            url.createdAt.getTime() + deltaTimeByDelete > new Date().getTime()
-        );
+        urls = urls.map((url: URLData) => {
+          if (
+            url.createdAt.getTime() + deltaTimeByDelete <
+            new Date().getTime()
+          ) {
+            url.invisibleCause = EXCEED_DAY;
+          }
+          return url;
+        });
         store.set("urls")(urls);
       };
     });
@@ -39,19 +49,24 @@ class UrlAreaComponent extends React.Component<{ store }> {
     const urls = store.get("urls") as URLData[];
 
     store.set("href")("");
-    store.set("urls")([...urls, { href, createdAt: new Date() }]);
+    store.set("urls")([
+      ...urls,
+      { createdAt: new Date(), href, invisibleCause: NOT_EXPIRED }
+    ]);
   }
 
   handleURLClicked(urlId: number) {
     const store = this.props.store;
     const urls = store.get("urls") as URLData[];
-    store.set("urls")(urls.filter(x => x.id !== urlId));
+    const changedIndex = urls.findIndex(url => url.id === urlId);
+    urls[changedIndex].invisibleCause = CLICKED_URL;
+    store.set("urls")(urls);
   }
 
   render() {
     const store = this.props.store;
     const href = store.get("href");
-    const urls = store.get("urls");
+    const urls = store.get("urls") as URLData[];
     return (
       <div className="url-area__container">
         <p>Sharing-MVP</p>
@@ -65,16 +80,18 @@ class UrlAreaComponent extends React.Component<{ store }> {
           追加
         </button>
 
-        {urls.map((url: URLData) => (
-          <a
-            key={url.id}
-            href={url.href}
-            onClick={() => this.handleURLClicked(url.id)}
-            target="_blank"
-          >
-            {url.href}
-          </a>
-        ))}
+        {urls
+          .filter(url => url.invisibleCause === NOT_EXPIRED)
+          .map((url: URLData) => (
+            <a
+              key={url.id}
+              href={url.href}
+              onClick={() => this.handleURLClicked(url.id)}
+              target="_blank"
+            >
+              {url.href}
+            </a>
+          ))}
       </div>
     );
   }

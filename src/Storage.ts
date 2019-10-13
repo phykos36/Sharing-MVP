@@ -31,7 +31,6 @@ export function dbAll() {
   });
 
   req.addEventListener("upgradeneeded", event => {
-    console.log("upgrade");
     const db: IDBDatabase = req.result;
     const objStore = db.createObjectStore("url", {
       keyPath: "id",
@@ -40,7 +39,6 @@ export function dbAll() {
 
     objStore.transaction.addEventListener("oncomplete", event => {
       const urlObjStore = db.transaction("url", "readwrite").objectStore("url");
-      console.log("hey");
     });
   });
 }
