@@ -8,6 +8,7 @@ import {
 import { Store, StoreInterface } from "../../Store";
 import { dbManipulator } from "../../Storage";
 import { URLRegister } from "../molecules/URLRegister/URLRegister";
+import { URLItem } from "../molecules/URLItem/URLItem";
 
 class UrlAreaComponent extends React.Component<{ store }> {
   constructor(props) {
@@ -80,15 +81,7 @@ class UrlAreaComponent extends React.Component<{ store }> {
           {urls
             .filter(url => url.invisibleCause === NOT_EXPIRED)
             .map((url: URLData) => (
-              <li key={url.id}>
-                <a
-                  href={url.href}
-                  onClick={() => this.handleURLClicked(url.id)}
-                  target="_blank"
-                >
-                  {url.href}
-                </a>
-              </li>
+              <URLItem key={url.id} url={url} />
             ))}
         </ul>
       </div>
