@@ -3,7 +3,8 @@ import {
   URLData,
   CLICKED_URL,
   EXCEED_DAY,
-  NOT_EXPIRED
+  NOT_EXPIRED,
+  ExtendedURL
 } from "../../URLData/URLData";
 import { Store, StoreInterface } from "../../Store";
 import { dbManipulator } from "../../Storage";
@@ -23,15 +24,8 @@ class UrlAreaComponent extends React.Component<{ store }> {
       const getReq = objStore.getAll();
       getReq.onsuccess = event => {
         let urls: URLData[] = getReq.result;
-        const deltaTimeByDelete = 10 * 24 * 60 * 60 * 1000;
         urls = urls.map((url: URLData) => {
-          if (
-            url.createdAt.getTime() + deltaTimeByDelete <
-            new Date().getTime()
-          ) {
-            url.invisibleCause = EXCEED_DAY;
-          }
-          return url;
+          return ExtendedURL.generate(url).build();
         });
         store.set("urls")(urls);
       };
