@@ -47,8 +47,8 @@ export class ExtendURL {
     const hour = Math.floor(ms / HOUR_MS);
     return [day, hour];
   }
-  public isExpired(): boolean {
-    return this.getRemainTimeMs() < 0;
+  public isView(): boolean {
+    return this.urlData.invisibleCause === NOT_EXPIRED;
   }
   set invisibleCause(cause: INVISIBLE_CAUSE) {
     this.urlData.invisibleCause = cause;

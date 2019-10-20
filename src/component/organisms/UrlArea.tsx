@@ -71,7 +71,7 @@ class UrlAreaComponent extends React.Component<{ store }> {
             .map((url) => {
               return ExtendURL.generate(url);
             })
-            .filter((url) => !url.isExpired())
+            .filter((url) => url.isView())
             .map((extendURL) => {
               return extendURL.build();
             })
