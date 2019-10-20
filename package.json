@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server",
-    "fmt": "prettier --write src/**/*.tsx",
+    "fmt": "prettier --write 'src/**/*.ts' prettier --write 'src/**/*.tsx'",
     "build": "webpack",
-	"lint": "tslint -c tslint.json 'src/**/*.ts'"
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "keywords": [],
   "author": "",
