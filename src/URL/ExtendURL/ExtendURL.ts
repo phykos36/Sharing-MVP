@@ -1,15 +1,14 @@
 import { IURL } from "../IURL";
 import {
+  CLICKED_URL,
   EXCEED_DAY,
-  NOT_EXPIRED,
   INVISIBLE_CAUSE,
-  CLICKED_URL
+  NOT_EXPIRED,
 } from "../inner/type";
 
 const DELTA_TIME_BY_DELETE = 10 * 24 * 60 * 60 * 1000;
 
 export class ExtendURL {
-  private urlData: IURL;
   public static generate(url: IURL): ExtendURL {
     const extendURL = new ExtendURL(url);
     if (
@@ -20,6 +19,7 @@ export class ExtendURL {
     }
     return extendURL;
   }
+  private urlData: IURL;
   private constructor(url: IURL) {
     this.urlData = url;
   }
@@ -47,8 +47,8 @@ export class ExtendURL {
     const hour = Math.floor(ms / HOUR_MS);
     return [day, hour];
   }
-  public isExpired(): boolean {
-    return this.getRemainTimeMs() < 0;
+  public isView(): boolean {
+    return this.urlData.invisibleCause === NOT_EXPIRED;
   }
   set invisibleCause(cause: INVISIBLE_CAUSE) {
     this.urlData.invisibleCause = cause;

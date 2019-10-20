@@ -8,7 +8,7 @@ interface Props {
 export const URLRegister: React.FC<Props> = ({
   handleChange,
   handleSubmit,
-  href
+  href,
 }) => {
   return (
     <div className="com-m-URLRegister__container">
