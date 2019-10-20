@@ -1,14 +1,10 @@
 import React from "react";
-import {
-  URLData,
-  CLICKED_URL,
-  EXCEED_DAY,
-  NOT_EXPIRED
-} from "../../URLData/URLData";
-import { Store, StoreInterface } from "../../Store";
+import { Store } from "../../Store";
 import { dbManipulator } from "../../Storage";
 import { URLRegister } from "../molecules/URLRegister/URLRegister";
 import { URLItem } from "../molecules/URLItem/URLItem";
+import { IURL, generateURL } from "../../URL/IURL";
+import { ExtendURL, updateURLVisible } from "../../URL/ExtendURL/ExtendURL";
 
 class UrlAreaComponent extends React.Component<{ store }> {
   constructor(props) {
@@ -22,16 +18,9 @@ class UrlAreaComponent extends React.Component<{ store }> {
     dbManipulator(objStore => {
       const getReq = objStore.getAll();
       getReq.onsuccess = event => {
-        let urls: URLData[] = getReq.result;
-        const deltaTimeByDelete = 10 * 24 * 60 * 60 * 1000;
-        urls = urls.map((url: URLData) => {
-          if (
-            url.createdAt.getTime() + deltaTimeByDelete <
-            new Date().getTime()
-          ) {
-            url.invisibleCause = EXCEED_DAY;
-          }
-          return url;
+        let urls: IURL[] = getReq.result;
+        urls = urls.map(url => {
+          return updateURLVisible(url);
         });
         store.set("urls")(urls);
       };
@@ -48,27 +37,26 @@ class UrlAreaComponent extends React.Component<{ store }> {
     event.preventDefault();
     const store = this.props.store;
     const href = store.get("href") as string;
-    const urls = store.get("urls") as URLData[];
+    const urls = store.get("urls") as IURL[];
 
     store.set("href")("");
-    store.set("urls")([
-      ...urls,
-      { createdAt: new Date(), href, invisibleCause: NOT_EXPIRED }
-    ]);
+    store.set("urls")([...urls, generateURL(href)]);
   }
 
   handleURLClicked(urlId: number) {
     const store = this.props.store;
-    const urls = store.get("urls") as URLData[];
+    const urls = store.get("urls") as IURL[];
     const changedIndex = urls.findIndex(url => url.id === urlId);
-    urls[changedIndex].invisibleCause = CLICKED_URL;
+    const extendURL = ExtendURL.generate(urls[changedIndex]);
+    extendURL.clickedURL();
+    urls[changedIndex] = extendURL.build();
     store.set("urls")(urls);
   }
 
   render() {
     const store = this.props.store;
     const href = store.get("href");
-    const urls = store.get("urls") as URLData[];
+    const urls = store.get("urls") as IURL[];
     return (
       <div className="url-area__container">
         <p>Sharing-MVP</p>
@@ -79,8 +67,14 @@ class UrlAreaComponent extends React.Component<{ store }> {
         ></URLRegister>
         <ul>
           {urls
-            .filter(url => url.invisibleCause === NOT_EXPIRED)
-            .map((url: URLData) => (
+            .map(url => {
+              return ExtendURL.generate(url);
+            })
+            .filter(url => !url.isExpired())
+            .map(extendURL => {
+              return extendURL.build();
+            })
+            .map((url: IURL) => (
               <URLItem key={url.id} url={url} />
             ))}
         </ul>

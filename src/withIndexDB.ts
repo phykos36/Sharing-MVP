@@ -1,11 +1,11 @@
 import { Effects } from "undux";
 import { StoreInterface } from "./Store";
-import { URLData } from "./URLData/URLData";
 import { dbManipulator } from "./Storage";
 import { zip } from "rxjs";
+import { IURL } from "./URL/IURL";
 
 export const withIndexDB: Effects<StoreInterface> = store => {
-  store.on("urls").subscribe((urls: URLData[]) => {
+  store.on("urls").subscribe((urls: IURL[]) => {
     dbManipulator(objStore => {
       const getAllKeysReq = objStore.getAllKeys();
       getAllKeysReq.addEventListener("success", event => {
