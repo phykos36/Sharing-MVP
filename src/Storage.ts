@@ -1,5 +1,3 @@
-import { URLData } from "./URLData/URLData";
-
 export function openURLDB(): IDBOpenDBRequest {
   const req = indexedDB.open("AlphaDB", 1);
 

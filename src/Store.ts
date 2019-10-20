@@ -1,10 +1,10 @@
 import { createConnectedStore } from "undux";
-import { URLData } from "./URLData/URLData";
 import { withIndexDB } from "./withIndexDB";
+import { IURL } from "./URL/IURL";
 
 export interface StoreInterface {
   href: string;
-  urls: URLData[];
+  urls: IURL[];
 }
 
 export const Store = createConnectedStore<StoreInterface>(
