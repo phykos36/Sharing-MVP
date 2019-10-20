@@ -11,6 +11,7 @@ class UrlAreaComponent extends React.Component<{ store }> {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleURLClicked = this.handleURLClicked.bind(this);
   }
 
   componentDidMount() {
@@ -70,12 +71,16 @@ class UrlAreaComponent extends React.Component<{ store }> {
             .map((url) => {
               return ExtendURL.generate(url);
             })
-            .filter((url) => !url.isExpired())
+            .filter((url) => url.isView())
             .map((extendURL) => {
               return extendURL.build();
             })
             .map((url: IURL) => (
-              <URLItem key={url.id} url={url} />
+              <URLItem
+                key={url.id}
+                url={url}
+                handleURLClicked={this.handleURLClicked}
+              />
             ))}
         </ul>
       </div>
