@@ -15,11 +15,11 @@ class UrlAreaComponent extends React.Component<{ store }> {
 
   componentDidMount() {
     const store = this.props.store;
-    dbManipulator(objStore => {
+    dbManipulator((objStore) => {
       const getReq = objStore.getAll();
-      getReq.onsuccess = event => {
+      getReq.onsuccess = (event) => {
         let urls: IURL[] = getReq.result;
-        urls = urls.map(url => {
+        urls = urls.map((url) => {
           return updateURLVisible(url);
         });
         store.set("urls")(urls);
@@ -46,7 +46,7 @@ class UrlAreaComponent extends React.Component<{ store }> {
   handleURLClicked(urlId: number) {
     const store = this.props.store;
     const urls = store.get("urls") as IURL[];
-    const changedIndex = urls.findIndex(url => url.id === urlId);
+    const changedIndex = urls.findIndex((url) => url.id === urlId);
     const extendURL = ExtendURL.generate(urls[changedIndex]);
     extendURL.clickedURL();
     urls[changedIndex] = extendURL.build();
@@ -67,11 +67,11 @@ class UrlAreaComponent extends React.Component<{ store }> {
         ></URLRegister>
         <ul>
           {urls
-            .map(url => {
+            .map((url) => {
               return ExtendURL.generate(url);
             })
-            .filter(url => !url.isExpired())
-            .map(extendURL => {
+            .filter((url) => !url.isExpired())
+            .map((extendURL) => {
               return extendURL.build();
             })
             .map((url: IURL) => (
