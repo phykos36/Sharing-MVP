@@ -4,15 +4,16 @@ import { IURL } from "../../../URL/IURL";
 
 interface Props {
   url: IURL;
+  handleURLClicked(id: number): void;
 }
 
-export const URLItem: React.FC<Props> = ({ url }) => {
+export const URLItem: React.FC<Props> = ({ url, handleURLClicked }) => {
   const remainTime = ExtendURL.generate(url).getRemainTime();
   return (
     <li key={url.id}>
       <a
         href={url.href}
-        onClick={() => this.handleURLClicked(url.id)}
+        onClick={() => handleURLClicked(url.id)}
         target="_blank"
       >
         {url.href}
