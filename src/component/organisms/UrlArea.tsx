@@ -7,6 +7,8 @@ import {
 } from "../../URLData/URLData";
 import { Store, StoreInterface } from "../../Store";
 import { dbManipulator } from "../../Storage";
+import { URLRegister } from "../molecules/URLRegister/URLRegister";
+import { URLItem } from "../molecules/URLItem/URLItem";
 
 class UrlAreaComponent extends React.Component<{ store }> {
   constructor(props) {
@@ -70,28 +72,16 @@ class UrlAreaComponent extends React.Component<{ store }> {
     return (
       <div className="url-area__container">
         <p>Sharing-MVP</p>
-        <input
-          className="url-area__input"
-          onChange={this.handleChange}
-          type="text"
-          value={href}
-        />
-        <button className="add-btn" onClick={this.handleSubmit}>
-          追加
-        </button>
+        <URLRegister
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          href={href}
+        ></URLRegister>
         <ul>
           {urls
             .filter(url => url.invisibleCause === NOT_EXPIRED)
             .map((url: URLData) => (
-              <li key={url.id}>
-                <a
-                  href={url.href}
-                  onClick={() => this.handleURLClicked(url.id)}
-                  target="_blank"
-                >
-                  {url.href}
-                </a>
-              </li>
+              <URLItem key={url.id} url={url} />
             ))}
         </ul>
       </div>
