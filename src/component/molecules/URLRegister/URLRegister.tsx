@@ -15,6 +15,7 @@ export const URLRegister: React.FC<Props> = ({
       <input
         className="url-area__input"
         onChange={handleChange}
+        placeholder="URLを貼り付け"
         type="text"
         value={href}
       />
