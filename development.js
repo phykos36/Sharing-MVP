@@ -5,11 +5,13 @@ const src = path.resolve(__dirname, "src");
 const dist = path.resolve(__dirname, "dist");
 
 export default {
-  entry: path.join(src, "index.tsx"),
-
+  entry: {
+    bundle: path.join(src, "index.tsx"),
+    app: path.join(src, "index.css")
+  },
   output: {
     path: dist,
-    filename: "bundle.js"
+    filename: "[name].js"
   },
 
   module: {
@@ -23,7 +25,12 @@ export default {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         loader: "ts-loader"
-	  }
+      },
+      {
+        test: /\.(sa|c)ss$/,
+        exclude: /node_modules/,
+        loader: ["style-loader", "css-loader", "sass-loader"]
+      }
     ]
   },
 

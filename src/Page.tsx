@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { URLArea } from "./component/molecules/UrlArea";
+import { URLArea } from "./component/organisms/UrlArea";
 import { Store } from "./Store";
 import { dbAll, dbManipulator } from "./Storage";
 
